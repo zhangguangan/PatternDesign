@@ -9,6 +9,7 @@ import com.patternDesign.singleton.Singleton;
  */
 public class Main {
 
+
     /**
      * ------------------------------------------------------------------------------------------------
      * 创建型
