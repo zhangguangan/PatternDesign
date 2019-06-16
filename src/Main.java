@@ -7,9 +7,17 @@ import com.patternDesign.bridge.OracleDbDriver;
 import com.patternDesign.builder.Human;
 import com.patternDesign.builder.HumanDirector;
 import com.patternDesign.builder.SuperManBuilder;
+import com.patternDesign.combination.FileClient;
+import com.patternDesign.combination.FolderNode;
+import com.patternDesign.detector.ListBoxComponent;
+import com.patternDesign.detector.ScrollBarListBoxDetecot;
+import com.patternDesign.facade.ComputerFacade;
 import com.patternDesign.factory.IMyMessage;
 import com.patternDesign.factory.MyMessageEnum;
 import com.patternDesign.factory.MyMessageFactory;
+import com.patternDesign.flowWeight.Coordinates;
+import com.patternDesign.flowWeight.IgoChessman;
+import com.patternDesign.flowWeight.IgoChessmanFactory;
 import com.patternDesign.singleton.Singleton;
 
 /**
@@ -96,6 +104,76 @@ public class Main {
         concreteDbBridge.connection();
     }
 
+    /**
+     * 组合模式
+     * 使用场景：组合模式正是应树形结构而生，所以组合模式的使用场景就是出现树形结构的地方。比如：文件目录显示，多及目录呈现等树形结构数据的操作。
+     * 优点：
+     * 可以清楚地定义分层次的复杂类型，表示对象的全部层次或者部分层次  ，它让客户端忽略了层次的差异，方便对整个层次经行控制。
+     * 客户端可以一致的使用一个组合模式或对单个对象，不必关心处理的是单个对象还是整个组合结构，简化了客户端的代码。
+     * 在组合模式种增加新的容器构件和叶子构件都很方便，无需对现有类库进行任何修改，符合开闭原则。
+     * 为树形结构的面向对象实现提供了一种灵活的解决方案，通过叶子对象和容器对象的递归组合可以形成复杂的树形机构，但对树形结构的控制却很简单。
+     * 缺点：
+     * 在增加新的构件时就比较难。而且难以限定，有时候希望在一个容器种能有某些特定的对象，例如在某个文件夹只能有image或者gif等。这个就比较难以实现。
+     */
+    public static void combination() {
+        FolderNode folderNode = new FolderNode("D:/需求");
+        FileClient.createTree(folderNode);
+        folderNode.display();
+    }
+
+    /**
+     * 外观模式
+     * 优点：
+     * 低耦合，使得客户端和子系统之间解耦，让子系统内部的模块功能更容易扩展和维护；
+     * 更好的划分访问层次
+     * 场景：
+     * 复杂流程当中使用的业务模块较多
+     */
+    public static void facade() {
+        ComputerFacade computerFacade = new ComputerFacade();
+        computerFacade.start();
+        computerFacade.shutDown();
+    }
+
+    /**
+     * 装饰者模式
+     * 场景：动态地给一个对象添加一些额外的职责
+     * （1）在不影响其他对象的情况下，以动态、透明的方式给单个对象添加职责。
+     * （2）处理那些可以撤消的职责。
+     * （3）当不能采用生成子类的方法进行扩充时。
+     * 一种情况是，可能有大量独立的扩展，为支持每一种组合将产生大量的 子类，使得子类数目呈爆炸性增长。
+     * 另一种情况可能是因为类定义被隐藏，或类定义不能用于生成子类。
+     */
+    public static void detector() {
+        ListBoxComponent listBoxComponent = new ListBoxComponent();
+        listBoxComponent.display();
+
+        ScrollBarListBoxDetecot scrollBarListBoxDetecot = new ScrollBarListBoxDetecot(listBoxComponent);
+        scrollBarListBoxDetecot.setScrollBar4ListBox();
+    }
+
+
+    /**
+     * 享元模式
+     * 场景：
+     * 当我们项目中创建很多对象，而且这些对象存在许多相同模块
+     * 我们可以将这些相同的模块提取出来采用享元模式生成单一对象，
+     * 再使用这个对象与之前的诸多对象进行配合使用，这样无疑会节省很多空间。
+     */
+    public static void flyWeight() {
+        IgoChessmanFactory factory = IgoChessmanFactory.getInstance();
+        IgoChessman blackChessman = factory.getIgoChessman("black");
+        IgoChessman blackChessman2 = factory.getIgoChessman("black");
+        IgoChessman whiteChessman = factory.getIgoChessman("white");
+
+        blackChessman.dispaly(new Coordinates(1, 2));
+        whiteChessman.dispaly(new Coordinates(3, 4));
+        System.out.println(blackChessman == blackChessman2);
+    }
+
+    /**
+     * 代理模式
+     */
 
     /**
      * ------------------------------------------------------------------------------------------------
@@ -116,6 +194,10 @@ public class Main {
          */
         adapter();
         bridge();
+        combination();
+        facade();
+        detector();
+        flyWeight();
 
     }
 }
