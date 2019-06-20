@@ -7,8 +7,11 @@ import com.patternDesign.bridge.OracleDbDriver;
 import com.patternDesign.builder.Human;
 import com.patternDesign.builder.HumanDirector;
 import com.patternDesign.builder.SuperManBuilder;
+import com.patternDesign.chain.JingliLeader;
+import com.patternDesign.chain.ZhurenLeader;
 import com.patternDesign.combination.FileClient;
 import com.patternDesign.combination.FolderNode;
+import com.patternDesign.command.Customer;
 import com.patternDesign.detector.ListBoxComponent;
 import com.patternDesign.detector.ScrollBarListBoxDetecot;
 import com.patternDesign.facade.ComputerFacade;
@@ -18,7 +21,13 @@ import com.patternDesign.factory.MyMessageFactory;
 import com.patternDesign.flowWeight.Coordinates;
 import com.patternDesign.flowWeight.IgoChessman;
 import com.patternDesign.flowWeight.IgoChessmanFactory;
+import com.patternDesign.interpret.TestInterpret;
+import com.patternDesign.iterator.IteratorTest;
+import com.patternDesign.proxy.SingerProxyHandler;
 import com.patternDesign.singleton.Singleton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 设计模式测试
@@ -173,7 +182,15 @@ public class Main {
 
     /**
      * 代理模式
+     *
+     * 符合开闭原则: 对修改关闭对扩展开放
+     * spring aop使用了代理
+     *
      */
+    public static void proxy() {
+        SingerProxyHandler.test();
+    }
+
 
     /**
      * ------------------------------------------------------------------------------------------------
@@ -181,23 +198,107 @@ public class Main {
      * - 责任链模式、命令模式、解释器模式、迭代模式、中介者模式、备忘录模式、
      * - 观察者模式、状态模式、策略模式、模板方法模式、访问者模式
      */
+
+    /**
+     * 责任链模式
+     *
+     * 应用场景：职责链上的处理者负责处理请求，
+     * 客户只需要将请求发送到职责链上即可，无须关心请求的处理细节和请求的传递，所以职责链将请求的发送者和请求的处理者解耦了
+     * 过滤器
+     */
+    public static void chain() {
+        JingliLeader jingliLeader = new JingliLeader();
+        ZhurenLeader zhurenLeader = new ZhurenLeader();
+        zhurenLeader.setNextLeader(jingliLeader);
+        zhurenLeader.handleRequest(5);
+    }
+
+    /**
+     * 命令模式
+     * 将“请求”(命令/口令)封装成一个对象，以便使用不同的请求、队列或者日志来参数化其对象。
+     * 命令模式也支持撤销操作。命令模式的目的就是达到命令的发出者和执行者之间解耦，实现请求和执行分开。
+     *
+     * 使用场景：菜馆点餐、遥控器、队列请求、日志请求、状态机**
+     */
+    public static void command() {
+        Customer.test();
+    }
+
+
+    /**
+     * 解释器模式
+     * 解释器模式是类的行为模式。
+     * 给定一个语言之后，解释器模式可以定义出其文法的一种表示，并同时提供一个解释器。
+     * 客户端可以使用这个解释器来解释这个语言中的句子。
+     *
+     *
+     * （1）抽象表达式(Expression)角色：声明一个所有的具体表达式角色都需要实现的抽象接口。这个接口主要是一个interpret()方法，称做解释操作。
+     *
+     *  (2）终结符表达式(Terminal Expression)角色：实现了抽象表达式角色所要求的接口，主要是一个interpret()方法；文法中的每一个终结符都有一个具体终结表达式与之相对应。比如有一个简单的公式R=R1+R2，在里面R1和R2就是终结符，对应的解析R1和R2的解释器就是终结符表达式。
+     *
+     * （3）非终结符表达式(Nonterminal Expression)角色：文法中的每一条规则都需要一个具体的非终结符表达式，非终结符表达式一般是文法中的运算符或者其他关键字，比如公式R=R1+R2中，“+"就是非终结符，解析“+”的解释器就是一个非终结符表达式。
+     *
+     * （4）环境(Context)角色：这个角色的任务一般是用来存放文法中各个终结符所对应的具体值，比如R=R1+R2，我们给R1赋值100，给R2赋值200。这些信息需要存放到环境角色中，很多情况下我们使用Map来充当环境角色就足够了。
+     * 适用场景： 一些对象属性随着复杂业务变化而变化的场景。例如加减乘除
+     */
+    public static void interpret() {
+        TestInterpret.test();
+    }
+
+    /**
+     * 迭代模式
+     * 提供一种方法顺序访问一个聚合对象中的各种元素，而又不暴露该对象的内部表示。
+     * (1)迭代器角色（Iterator）:定义遍历元素所需要的方法，一般来说会有这么三个方法：取得下一个元素的方法next()，判断是否遍历结束的方法hasNext()），移出当前对象的方法remove(),
+     *
+     * (2)具体迭代器角色（Concrete Iterator）：实现迭代器接口中定义的方法，完成集合的迭代。
+     *
+     * (3)容器角色(Aggregate):  一般是一个接口，提供一个iterator()方法，例如java中的Collection接口，List接口，Set接口等
+     *
+     * (4)具体容器角色（ConcreteAggregate）：就是抽象容器的具体实现类，比如List接口的有序列表实现ArrayList，List接口的链表实现LinkList，Set接口的哈希列表的实现HashSet等。
+     *
+     * 场景：迭代器模式是与集合共生共死的，一般来说，我们只要实现一个集合，就需要同时提供这个集合的迭代器，
+     * 就像java中的Collection，List、Set、Map等，这些集合都有自己的迭代器。
+     * 假如我们要实现一个这样的新的容器，当然也需要引入迭代器模式，给我们的容器实现一个迭代器。
+     *
+     */
+    public static void iterator() {
+        IteratorTest.test();
+    }
+
+    /**
+     * 备忘录模式
+     */
+
+    /**
+     * 中介者模式
+     */
+
+
     public static void main(String[] args) {
         /**
          * 创建型
          */
-        factoryTest();
+        /*factoryTest();
         singletonTest();
-        builderTest();
+        builderTest();*/
 
         /**
          * 结构型
          */
-        adapter();
+        /*adapter();
         bridge();
         combination();
         facade();
         detector();
         flyWeight();
+        proxy();*/
 
+        /**
+         * 行为型
+         */
+        chain();
+        command();
+        interpret();
+        iterator();
     }
 }
