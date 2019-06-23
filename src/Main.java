@@ -23,6 +23,7 @@ import com.patternDesign.flowWeight.IgoChessman;
 import com.patternDesign.flowWeight.IgoChessmanFactory;
 import com.patternDesign.interpret.TestInterpret;
 import com.patternDesign.iterator.IteratorTest;
+import com.patternDesign.mediator.MediatorTest;
 import com.patternDesign.proxy.SingerProxyHandler;
 import com.patternDesign.singleton.Singleton;
 
@@ -31,7 +32,13 @@ import java.util.List;
 
 /**
  * 设计模式测试
- * 设计模式六大原则：单一职责、开闭、里氏代换、依赖倒置、接口分离、迪米特
+ * 设计模式六大原则：
+ * **** 1 单一职责、
+ * **** 2 开闭、
+ * **** 3 里氏代换、
+ * **** 4 依赖倒置、
+ * **** 5 接口分离、
+ * **** 6 迪米特
  */
 public class Main {
 
@@ -182,10 +189,9 @@ public class Main {
 
     /**
      * 代理模式
-     *
+     * <p>
      * 符合开闭原则: 对修改关闭对扩展开放
      * spring aop使用了代理
-     *
      */
     public static void proxy() {
         SingerProxyHandler.test();
@@ -201,7 +207,7 @@ public class Main {
 
     /**
      * 责任链模式
-     *
+     * <p>
      * 应用场景：职责链上的处理者负责处理请求，
      * 客户只需要将请求发送到职责链上即可，无须关心请求的处理细节和请求的传递，所以职责链将请求的发送者和请求的处理者解耦了
      * 过滤器
@@ -217,7 +223,7 @@ public class Main {
      * 命令模式
      * 将“请求”(命令/口令)封装成一个对象，以便使用不同的请求、队列或者日志来参数化其对象。
      * 命令模式也支持撤销操作。命令模式的目的就是达到命令的发出者和执行者之间解耦，实现请求和执行分开。
-     *
+     * <p>
      * 使用场景：菜馆点餐、遥控器、队列请求、日志请求、状态机**
      */
     public static void command() {
@@ -230,14 +236,14 @@ public class Main {
      * 解释器模式是类的行为模式。
      * 给定一个语言之后，解释器模式可以定义出其文法的一种表示，并同时提供一个解释器。
      * 客户端可以使用这个解释器来解释这个语言中的句子。
-     *
-     *
+     * <p>
+     * <p>
      * （1）抽象表达式(Expression)角色：声明一个所有的具体表达式角色都需要实现的抽象接口。这个接口主要是一个interpret()方法，称做解释操作。
-     *
-     *  (2）终结符表达式(Terminal Expression)角色：实现了抽象表达式角色所要求的接口，主要是一个interpret()方法；文法中的每一个终结符都有一个具体终结表达式与之相对应。比如有一个简单的公式R=R1+R2，在里面R1和R2就是终结符，对应的解析R1和R2的解释器就是终结符表达式。
-     *
+     * <p>
+     * (2）终结符表达式(Terminal Expression)角色：实现了抽象表达式角色所要求的接口，主要是一个interpret()方法；文法中的每一个终结符都有一个具体终结表达式与之相对应。比如有一个简单的公式R=R1+R2，在里面R1和R2就是终结符，对应的解析R1和R2的解释器就是终结符表达式。
+     * <p>
      * （3）非终结符表达式(Nonterminal Expression)角色：文法中的每一条规则都需要一个具体的非终结符表达式，非终结符表达式一般是文法中的运算符或者其他关键字，比如公式R=R1+R2中，“+"就是非终结符，解析“+”的解释器就是一个非终结符表达式。
-     *
+     * <p>
      * （4）环境(Context)角色：这个角色的任务一般是用来存放文法中各个终结符所对应的具体值，比如R=R1+R2，我们给R1赋值100，给R2赋值200。这些信息需要存放到环境角色中，很多情况下我们使用Map来充当环境角色就足够了。
      * 适用场景： 一些对象属性随着复杂业务变化而变化的场景。例如加减乘除
      */
@@ -249,17 +255,16 @@ public class Main {
      * 迭代模式
      * 提供一种方法顺序访问一个聚合对象中的各种元素，而又不暴露该对象的内部表示。
      * (1)迭代器角色（Iterator）:定义遍历元素所需要的方法，一般来说会有这么三个方法：取得下一个元素的方法next()，判断是否遍历结束的方法hasNext()），移出当前对象的方法remove(),
-     *
+     * <p>
      * (2)具体迭代器角色（Concrete Iterator）：实现迭代器接口中定义的方法，完成集合的迭代。
-     *
+     * <p>
      * (3)容器角色(Aggregate):  一般是一个接口，提供一个iterator()方法，例如java中的Collection接口，List接口，Set接口等
-     *
+     * <p>
      * (4)具体容器角色（ConcreteAggregate）：就是抽象容器的具体实现类，比如List接口的有序列表实现ArrayList，List接口的链表实现LinkList，Set接口的哈希列表的实现HashSet等。
-     *
+     * <p>
      * 场景：迭代器模式是与集合共生共死的，一般来说，我们只要实现一个集合，就需要同时提供这个集合的迭代器，
      * 就像java中的Collection，List、Set、Map等，这些集合都有自己的迭代器。
      * 假如我们要实现一个这样的新的容器，当然也需要引入迭代器模式，给我们的容器实现一个迭代器。
-     *
      */
     public static void iterator() {
         IteratorTest.test();
@@ -269,10 +274,32 @@ public class Main {
      * 备忘录模式
      */
 
+
     /**
      * 中介者模式
+     * 用一个中介对象来封装一系列的对象交互。
+     * 中介者使各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变它们之间的交互。
+     * 1.Mediator
+     * 中介者定义一个接口用于与各同事（Colleague）对象通信。
+     *
+     * 2.ConcreteMediator
+     * 具体中介者通过协调各同事对象实现协作行为，了解并维护它的各个同事。
+     *
+     * 3.Colleague:
+     * 抽象同事类。
+     *
+     * ４.Colleagueclass
+     * 具体同事类。每个具体同事类都只需要知道自己的行为即可，但是他们都需要认识中介者
+     *
+     * 场景：
+     * 1.一组对象以定义良好但是复杂的方式进行通信，产生的相互依赖关系结构混乱且难以理解。
+     * 2.一个对象引用其他很多对象并且直接与这些对象通信,导致难以复用该对象。
+     * 3.想定制一个分布在多个类中的行为，但又不想生成太多的子类。
+     * 例如：群发邮件
      */
-
+    public static void mediator() {
+        MediatorTest.test();
+    }
 
     public static void main(String[] args) {
         /**
@@ -300,5 +327,6 @@ public class Main {
         command();
         interpret();
         iterator();
+        mediator();
     }
 }
