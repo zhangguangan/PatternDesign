@@ -1,3 +1,4 @@
+import com.patternDesign.Strategy.TestStrategy;
 import com.patternDesign.adapter.Adapter4Class;
 import com.patternDesign.adapter.Adapter4Object;
 import com.patternDesign.adapter.TypeC;
@@ -24,8 +25,12 @@ import com.patternDesign.flowWeight.IgoChessmanFactory;
 import com.patternDesign.interpret.TestInterpret;
 import com.patternDesign.iterator.IteratorTest;
 import com.patternDesign.mediator.MediatorTest;
+import com.patternDesign.momento.TestMomento;
+import com.patternDesign.observe.TestObserver;
 import com.patternDesign.proxy.SingerProxyHandler;
 import com.patternDesign.singleton.Singleton;
+import com.patternDesign.template.TestTemplate;
+import com.patternDesign.visitor.TestVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +38,18 @@ import java.util.List;
 /**
  * 设计模式测试
  * 设计模式六大原则：
- * **** 1 单一职责、
- * **** 2 开闭、
- * **** 3 里氏代换、
- * **** 4 依赖倒置、
- * **** 5 接口分离、
- * **** 6 迪米特
+ * **** 1 单一职责：接口设计应符合职责单一不相互依赖
+ * **** 2 开闭： 模块和功能设计要符合对扩展开放、对修改封闭
+ * **** 3 里氏代换： 只要父类出现的地方子类就可以出现，如果子类不能完全代替父类则建议采用依赖、聚合或者组合方式来代替
+ * **** 4 依赖倒置： 依赖抽象而不依赖具体。
+ * **** 5 接口分离：高内聚和低耦合 设计时应尽量将不同职责的模块分开 减少耦合
+ * **** 6 迪米特：最少知道原则，一个对象尽可能访问自身的属性和对象，尽可能少知道其他对象的方法和属性 可以降低各模块之间的耦合度
  */
 public class Main {
 
 
     /**
-     * ------------------------------------------------------------------------------------------------
+     * ------------------------------------------------------------------------------------------------——————————————————————————————————————————————————————————
      * 创建型
      * 抽象工厂模式、工厂方法、建造者模式、原型模式、单态模式、
      */
@@ -84,7 +89,7 @@ public class Main {
     }
 
     /**
-     * ------------------------------------------------------------------------------------------------
+     * ------------------------------------------------------------------------------------------------——————————————————————————————————————————————————
      * 结构型
      * 适配器模式、桥接模式、组合模式、外观模式、装饰者模式、享元模式、代理模式
      */
@@ -199,7 +204,7 @@ public class Main {
 
 
     /**
-     * ------------------------------------------------------------------------------------------------
+     * ------------------------------------------------------------------------------------------------——————————————————————————————————————————————————
      * 行为型
      * - 责任链模式、命令模式、解释器模式、迭代模式、中介者模式、备忘录模式、
      * - 观察者模式、状态模式、策略模式、模板方法模式、访问者模式
@@ -271,11 +276,6 @@ public class Main {
     }
 
     /**
-     * 备忘录模式
-     */
-
-
-    /**
      * 中介者模式
      * 用一个中介对象来封装一系列的对象交互。
      * 中介者使各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变它们之间的交互。
@@ -299,6 +299,80 @@ public class Main {
      */
     public static void mediator() {
         MediatorTest.test();
+    }
+
+
+    /**
+     * 备忘录模式
+     * 场景
+     * 1、保存一个对象在某一个时刻的全部状态或部分状态，这样以后需要时它能够恢复到先前的状态，实现撤销操作。
+     * 2、防止外界对象破坏一个对象历史状态的封装性，避免将对象历史状态的实现细节暴露给外界对象。
+     */
+    public static void momento() {
+        TestMomento.test();
+    }
+
+    /**
+     * 观察者模式
+     * 观察者模式提供了一种对象设计,让主题和观察者之间耦合度降得很低,为什么呢?关于观察者的一切,
+     * 主题只知道观察者实现了Observer接口,并不需要观察者具体的类是谁,做了什么或者其他细节.
+     * 这样的话,由于松耦合,改变主题或者观察者其中一方,并不会影响另一方,只要他们之间的接口仍被遵守,就可以自由地改变它.
+     * 降低对象之间的耦合度,也是面设对象设计的一个很重要的原则.　　
+     * 场景： 订阅发布场景
+     */
+    public static void observer() {
+        TestObserver.test();
+    }
+
+    /**
+     * 状态模式
+     * 使用场景：状态机
+     */
+
+
+    /**
+     * 策略模式
+     * 实现某一个功能有多种算法或者策略，我们可以根据应用场景的不同选择不同的算法或者策略来完成该功能。
+     * 优点:
+     * 　　　　1、可以动态的改变对象的行为
+     * 　　缺点:
+     * 　　　　1、客户端必须知道所有的策略类，并自行决定使用哪一个策略类
+     * 　　　　2、策略模式将造成产生很多策略类
+     * 场景：
+     * 实现某一个功能有多种算法或者策略，我们可以根据应用场景的不同选择不同的算法或者策略来完成该功能。
+     */
+    public static void strategy() {
+        TestStrategy.test();
+    }
+
+    /**
+     * 模板方法模式
+     * 在父类定义好应该执行算法的顺序和需要执行的方法，将可变方法延迟到子类进行加载
+     * 场景：短信模板
+     */
+    public static void template() {
+        TestTemplate.test();
+    }
+
+
+    /**
+     * 访问者模式
+     * 一个作用于某对象结构中各元素的操作，使你可以在不改变各元素类数据结构的前提下增加作用于这些元素的新操作
+     * 1.Visitor 抽象访问者角色
+     * 2.ConcreteVisitor.具体访问者角色
+     * 3.Element 接受访问操作元素
+     * 4.ConcreteElement 具体元素
+     * 5.ObjectStructure 结构对象角色，这是使用访问者模式必备的角色。
+     *
+     * 优点：
+     * 1、符合单一职责原则
+     * 2、扩展性良好：元素类可以通过接受不同的访问者来实现对不同操作的扩展。
+     *
+     * 场景：
+     * 数据结构相对稳定，把数据结构和作用与其上的其它操作解耦，使得操作相对自由。
+     */
+    public static void vistor() {
+        TestVisitor.test();
     }
 
     public static void main(String[] args) {
@@ -328,5 +402,10 @@ public class Main {
         interpret();
         iterator();
         mediator();
+        momento();
+        observer();
+        strategy();
+        template();
+        vistor();
     }
 }
