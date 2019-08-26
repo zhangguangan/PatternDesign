@@ -1,6 +1,6 @@
-package com.patternDesign.java8.List;
+package java8.List;
 
-import com.patternDesign.java8.model.UserInfo;
+import java8.model.UserInfo;
 
 import java.util.List;
 import java.util.Map;

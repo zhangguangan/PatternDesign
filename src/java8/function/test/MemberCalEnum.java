@@ -1,11 +1,9 @@
-package com.patternDesign.java8.function.test;
+package java8.function.test;
 
-import com.patternDesign.java8.model.UserInfo;
-import jdk.nashorn.internal.ir.FunctionCall;
+import java8.model.UserInfo;
 
 import java.math.BigDecimal;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 public enum MemberCalEnum {
     DEFULT(0, UserInfo::calculateAmount),

@@ -1,4 +1,4 @@
-package com.patternDesign.java8;
+package java8;
 
 public interface InterfaceTest {
     public default void print(Object log) {

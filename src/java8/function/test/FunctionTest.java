@@ -1,11 +1,9 @@
-package com.patternDesign.java8.function.test;
+package java8.function.test;
 
-import com.patternDesign.java8.model.UserInfo;
+import java8.model.UserInfo;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class FunctionTest {
     public static UserInfo getUserInfo() {

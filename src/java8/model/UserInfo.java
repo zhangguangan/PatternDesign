@@ -1,4 +1,4 @@
-package com.patternDesign.java8.model;
+package java8.model;
 
 import java.math.BigDecimal;
 
